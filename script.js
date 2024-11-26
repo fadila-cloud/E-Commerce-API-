@@ -1,30 +1,39 @@
-// ambil data produk dari API Publik milik fake store API
-fetch("https://fakestoreapi.com/products")
-  .then((res) => res.json())
-  .then((json) => console.log(json))
-  .catch((error) => console.error("Sedang error", error));
+// URL API Fake Store
+const apiUrl ='https://fakestoreapi.com/products'
 
-fetch("https://fakestoreapi.com/products/1")
-  .then((res) => res.json())
-  .then((json) => console.log(json));
+// Fungsi untuk mengambil dan menampilkan data
+async function fetchAndDisplayProduct() {
+  try {
+    // Fetch data dari API
+    const response = await fetch(apiUrl);
+    if (!response.ok) throw new Error('Gagal mengambil data');
 
-fetch("https://fakestoreapi.com/products/categories")
-  .then((res) => res.json())
-  .then((json) => console.log(json));
+    const data = await response.json();
 
-fetch("https://fakestoreapi.com/products", {
-  method: "POST",
-  body: JSON.stringify({
-    title: "test product",
-    price: 13.5,
-    description: "lorem ipsum set",
-    image: "https://i.pravatar.cc",
-    category: "electronic",
-  }),
-})
-  .then((res) => res.json())
-  .then((json) => console.log(json));
+    // Dapatkan container untuk menampilkan produk
+    const container = document.getElementById('products-container');
+    container.innerHTML = ''; // membersihkan semua isi di dlm container
 
-fetch("https://fakestoreapi.com/carts")
-  .then((res) => res.json())
-  .then((json) => console.log(json));
+    // iterasi semua produk dengan forEach
+    data.forEach((product) => {
+      const productHtml = `
+      <div class="product">
+        <img src="${product.image}" alt="${product.title}">
+        <h3>${product.title}</h3>
+        <p class="description">${product.description}</p>
+        <p class="price">Price: $${product.price}</p>
+        <p class="rating">Rating: ${product.rating.rate} (${product.rating.count} reviews)</p>
+      </div>
+    `;
+
+    // menambahkan produk ke container
+    container.innerHTML += productHtml;
+    });
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+// Panggil fungsi untuk fetch dan tampilkan produk
+fetchAndDisplayProduct();
+
