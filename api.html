@@ -3,15 +3,183 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fetch API</title>
+    <title>Multi Store - API -</title>
 
     <!-- Tautan Css -->
     <link rel="stylesheet" href="style.css" />
 
     <!-- Tautan javasript -->
     <script src="script.js"></script>
+
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
   </head>
   <body>
-    <div id="products-container"></div>
+    <!-- Navbar Starts -->
+    <header>
+      <a href="#" class="logo-header">multi<span style="color: #717171">store</span>.</a>
+      <nav class="navbar-header">
+        <a href="#home">Home</a>
+        <a href="#about">Tentang kami</a>
+        <a href="#products">Produk</a>
+        <a href="#review">Ulasan</a>
+        <a href="#contact">Kontak</a>
+      </nav>
+      <div class="icons-header">
+        <!-- tombol keranjang -->
+        <i data-feather="shopping-cart" class="cart-icon"></i>
+        <!-- <span id="jumlah-cart"></span> -->
+      </div>
+    </header>
+    <!-- Navbar Ends -->
+
+    <!-- Home Section Starts -->
+    <section class="home" id="home">
+      <div class="content-home">
+        <h3>multi<span>store</span>.</h3>
+        <p>MultiStore adalah toko online terpercaya dengan produk berkualitas</p>
+        <p>dan harga terbaik untuk pengalaman belanja yang aman.</p>
+        <a href="#products" class="btn-home">Belanja Sekarang</a>
+      </div>
+    </section>
+    <!-- Home Section Ends -->
+
+    <!-- About Section Starts -->
+    <section class="about" id="about">
+      <h1>Tentang<span>Kami</span></h1>
+      <h3>Kenapa pilih kami?</h3>
+      <p>Di<span>Multistore</span> ,kami berkomitmen untuk menjadi toko online terpercaya bagi anda. Kami menawarkan produk berkualitas dengan harga terbaik untuk memberikan pengalaman belanja yang aman dan nyaman. Kepercayaan dan kepuasan pelanggan adalah prioritas kami, sehingga anda dapat berbelanja dengan tenang dan mendapatkan nilai terbaik di setiap transaksi.</p>
+    </section>
+    <!-- About Section Ends -->
+
+    <!-- Menu Products Starts -->
+    <section class="products" id="products">
+      <h1>Produk</h1>
+      <div class="products-container">
+      </div>
+    </section>
+    <!-- Menu Products Ends -->
+
+    <!-- Review Starts -->
+    <section class="review" id="review">
+      <h1>Ulasan Customer</h1>
+      <div class="box-review">
+        <div class="box">
+          <div class="starss">
+            <i data-feather="star" class="stars"></i>
+            <i data-feather="star" class="stars"></i>
+            <i data-feather="star" class="stars"></i>
+            <i data-feather="star" class="stars"></i>
+            <i data-feather="star" class="stars"></i>
+          </div>
+          <p>"Harga bersaing, pengiriman cepat, dan produk berkualitas. Terima kasih, Multistore!."</p>
+          <div class="user">
+            <img src="images/1.png" alt="customer1" />
+            <div class="user-info">
+              <h3>Omar</h3>
+              <h4>Customer</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="box">
+          <div class="starss">
+            <i data-feather="star" class="stars"></i>
+            <i data-feather="star" class="stars"></i>
+            <i data-feather="star" class="stars"></i>
+            <i data-feather="star" class="stars"></i>
+            <i data-feather="star" class="stars"></i>
+          </div>
+          <p>"Barang original dan sesuai ekspetasi. Multistore sangat rekomendasi untuk belanja kebutuhan umum."</p>
+          <div class="user">
+            <img src="images/2.png" alt="customer2" />
+            <div class="user-info">
+              <h3>Aira</h3>
+              <h4>Customer</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="box">
+          <div class="starss">
+            <i data-feather="star" class="stars"></i>
+            <i data-feather="star" class="stars"></i>
+            <i data-feather="star" class="stars"></i>
+            <i data-feather="star" class="stars"></i>
+            <i data-feather="star" class="stars"></i>
+          </div>
+          <p>"Pengalaman belanja di Multistore sangat memuaskan! Harga nya terjangkau, pengirimannya pun cepat sampai tujuan."</p>
+          <div class="user">
+            <img src="images/3.png" alt="customer3" />
+            <div class="user-info">
+              <h3>Amir</h3>
+              <h4>Customer</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Review Ends -->
+
+    <!-- Contact Starts -->
+    <section class="contact" id="contact">
+      <div class="box-container">
+        <h1>Kontak</h1>
+        <div class="tooltip">
+          <span class="tooltiptext">Masukkan nama lengkap anda</span>
+          <input type="text" class="colom" placeholder="Name" />
+        </div>
+        <div class="tooltip">
+          <span class="tooltiptext">Masukkan email anda</span>
+          <input type="email" class="colom" placeholder="E-mail" />
+        </div>
+        <div class="tooltip">
+          <span class="tooltiptext">Tulis sedikit pesan anda</span>
+          <input type="text" class="colom" placeholder="Message" />
+        </div>
+        <button type="submit" class="btn-colom">Kirim</button>
+      </div>
+    </section>
+    <!-- Contact Ends -->
+
+    <!-- Footer Starts -->
+    <section class="footer">
+      <div class="box-container">
+        <div class="box-footer">
+          <h1>Quick Link</h1>
+          <a href="#">Home</a>
+          <a href="#about">About</a>
+          <a href="#products">Products</a>
+          <a href="#review">Review</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div class="box-footer">
+          <h1>Extra Link</h1>
+          <a href="#products">My Order</a>
+        </div>
+        <div class="box-footer">
+          <h1>Location</h1>
+          <p>Indonesia</p>
+          <p>USA</p>
+          <p>India</p>
+          <p>France</p>
+          <p>Marocco</p>
+        </div>
+        <div class="box-footer">
+          <h1>Contact Info</h1>
+          <p>+62 817-6237-8370</p>
+          <p>contact@gmail.com</p>
+          <p>Jakarta, Indonesia</p>
+        </div>
+      </div>
+      <div class="credit">Created By <span> Ilma Fadilah </span> | All Right Reserved</div>
+    </section>
+    <!-- Footer Ends -->
+
+    <!-- Feather Icons -->
+    <script>
+      feather.replace();
+    </script>
   </body>
 </html>
