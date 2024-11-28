@@ -1,20 +1,21 @@
 // URL API Fake Store
 const apiUrl = "https://fakestoreapi.com/products";
 
+const cart = []; // array kosong unutk menyimpan item keranjang
+
 // Fungsi untuk mengambil dan menampilkan data
 async function fetchAndDisplayProduct() {
   try {
     // Fetch data dari API
     const response = await fetch(apiUrl);
     if (!response.ok) throw new Error("Gagal mengambil data");
-
     const data = await response.json();
 
     // Dapatkan container untuk menampilkan produk
     const container = document.querySelector(".products-container"); // untuk mengambil elemen tunggal
     container.innerHTML = ""; // membersihkan semua isi di dlm container
 
-    // iterasi semua produk dengan forEach
+    // tampilkan setiap produk ke halaman
     data.forEach((product) => {
       const productHtml = `
       <div class="product">
