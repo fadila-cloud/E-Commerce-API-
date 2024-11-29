@@ -16,7 +16,7 @@
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
   </head>
   <body>
-    <!-- Navbar Starts -->
+    <!-- Navbar Mulai -->
     <header>
       <a href="#" class="logo-header">multi<span style="color: #717171">store</span>.</a>
       <nav class="navbar-header">
@@ -29,12 +29,12 @@
       <div class="icons-header">
         <!-- tombol keranjang -->
         <i data-feather="shopping-cart" class="cart-icon"></i>
-        <!-- <span id="jumlah-cart"></span> -->
+        <span id="jumlah-cart"></span>
       </div>
     </header>
-    <!-- Navbar Ends -->
+    <!-- Navbar Berakhir -->
 
-    <!-- Home Section Starts -->
+    <!-- Home Section Mulai -->
     <section class="home" id="home">
       <div class="content-home">
         <h3>multi<span>store</span>.</h3>
@@ -43,14 +43,26 @@
         <a href="#products" class="btn-home">Belanja Sekarang</a>
       </div>
     </section>
-    <!-- Home Section Ends -->
+    <!-- Home Section Berakhir -->
 
-    <!-- Shopping-cart Starts -->
+    <!-- Shopping-cart Mulai -->
     <div class="shopping-cart">
-      <div class="cart-item"></div>
+      <div class="cart-item">
+        <img src="${product.image}" alt="${product.title}" />
+        <div class="detail">
+          <h4></h4>
+          <span></span>
+          <button>&minus;</button>
+          <span></span>
+          <button>&plus;</button> &equals;
+          <!-- html entities simbol untk sama dengan -->
+          <span></span>
+          <button class="remove">Hapus</button>
+        </div>
+      </div>
       <!-- bila keranjang masih kosong maka tampilkan ini -->
       <h5 style="font-size: 1.5rem">Keranjang anda masih kosong</h5>
-      <h6>Total :</h6>
+      <h6>Total : <span></span></h6>
 
       <div class="form-container">
         <form action="" id="checkout">
@@ -121,29 +133,40 @@
               <option value="2035">2035</option>
             </select>
           </label>
-          <button class="btn-checkout" type="submit">Checkout</button>
-          <button class="btn-reset" type="reset">Reset</button>
+          <button class="btn-checkout" type="submit" @click.prevent="$store.cart.checkout(item)">Checkout</button>
+          <button class="btn-reset" type="reset" @click.prevent="$store.cart.hapussemua(item)">Reset</button>
         </form>
       </div>
     </div>
-    <!-- Shopping-cart Ends -->
+    <!-- Shopping-cart Berakhir -->
 
-    <!-- About Section Starts -->
+    <!-- About Section Mulai -->
     <section class="about" id="about">
       <h1>Tentang<span>Kami</span></h1>
       <h3>Kenapa pilih kami?</h3>
       <p>Di<span>Multistore</span> ,kami berkomitmen untuk menjadi toko online terpercaya bagi anda. Kami menawarkan produk berkualitas dengan harga terbaik untuk memberikan pengalaman belanja yang aman dan nyaman. Kepercayaan dan kepuasan pelanggan adalah prioritas kami, sehingga anda dapat berbelanja dengan tenang dan mendapatkan nilai terbaik di setiap transaksi.</p>
     </section>
-    <!-- About Section Ends -->
+    <!-- About Section Berakhir -->
 
-    <!-- Menu Products Starts -->
+    <!-- Menu Products Mulai -->
     <section class="products" id="products">
       <h1>Produk</h1>
       <div class="products-container"></div>
     </section>
-    <!-- Menu Products Ends -->
+    <!-- Menu Products Berakhir -->
 
-    <!-- Review Starts -->
+    <!-- Product Description Mulai -->
+     <section class="description-box">
+      <h1>Description About this Product</h1>
+      <button onclick="closeDesc()">&times;</button>
+      <div class="description-div">
+        <img src="" alt=""> <!-- kosongkan dulu src nya -->
+        <p></p>
+      </div>
+     </section>
+    <!-- Product Description Berakhir -->
+
+    <!-- Review Mulai -->
     <section class="review" id="review">
       <h1>Ulasan Customer</h1>
       <div class="box-review">
@@ -202,9 +225,9 @@
         </div>
       </div>
     </section>
-    <!-- Review Ends -->
+    <!-- Review Berakhir -->
 
-    <!-- Contact Starts -->
+    <!-- Contact Mulai -->
     <section class="contact" id="contact">
       <div class="box-container">
         <h1>Kontak</h1>
@@ -223,9 +246,9 @@
         <button type="submit" class="btn-colom">Kirim</button>
       </div>
     </section>
-    <!-- Contact Ends -->
+    <!-- Contact Berakhir -->
 
-    <!-- Footer Starts -->
+    <!-- Footer Mulai -->
     <section class="footer">
       <div class="box-container">
         <div class="box-footer">
@@ -257,7 +280,7 @@
       </div>
       <div class="credit">Created By <span> Ilma Fadilah </span> | All Right Reserved</div>
     </section>
-    <!-- Footer Ends -->
+    <!-- Footer Berakhir -->
 
     <!-- Feather Icons -->
     <script>

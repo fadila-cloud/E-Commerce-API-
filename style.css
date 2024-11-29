@@ -109,15 +109,18 @@ header .icons-header .cart-icon:hover {
   top: 6rem;
   width: 20rem;
   height: 31rem;
-  right: 0;
+  right: -100%;
   background-color: #fff;
   box-shadow: -0.1rem -0.1rem 0.5rem #555;
   z-index: 8888;
   position: fixed;
   padding: 1rem;
   font-size: 1.5rem;
+  overflow: auto;
+}
+.shopping-cart.active {
+  right: 0;
   display: block;
-  overflow: scroll;
 }
 .shopping-cart h5 {
   text-align: center;
@@ -183,6 +186,17 @@ header .icons-header .cart-icon:hover {
 .shopping-cart .form-container .total .btn-checkout:hover {
   background-color: red;
 }
+.shopping-cart .cart-item .detail .remove {
+  color: #fff;
+  font-size: 0.7rem;
+  border: 0.1rem solid rgb(255, 71, 71);
+  background-color: rgb(255, 71, 71);
+  padding: 0.1rem;
+}
+.shopping-cart .cart-item .detail .remove:hover {
+  background-color: red;
+  border: 0.1rem solid red;
+}
 
 /* about */
 .about {
@@ -246,6 +260,24 @@ header .icons-header .cart-icon:hover {
   box-sizing: border-box;
   background-color: #fff;
 }
+.products .products-container .product h3 {
+  white-space: nowrap;
+  width: 10rem;
+  overflow: hidden; /* menyembunyikan teks yg panjang */
+  text-overflow: ellipsis;
+  padding: 0;
+  font-size: 1.1rem;
+  margin: 1rem 0 0.3rem;
+}
+.products .products-container .product h3.fulltitle {
+  /* kelas fulltitle buat sendiri */
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset; /* kembali ke defaultnya */
+}
+.products .products-container .product h3:hover {
+  cursor: pointer;
+}
 .products .products-container .product .troli-cart {
   padding: 0.5rem 0.3rem;
   margin-top: auto; /* mendorong elemen ke bagian bawah */
@@ -265,28 +297,96 @@ header .icons-header .cart-icon:hover {
   max-width: 10rem;
   height: 10rem;
 }
-.products .products-container .product h3 {
+.products .products-container .product h5 {
   font-size: 1rem;
-  margin: 1rem 0;
+  font-weight: normal;
+  padding: 0.3rem 0.2rem;
+  margin-bottom: 0.3rem;
+  border-radius: 0.1rem;
+  color: red;
+}
+.products .products-container .product h5:hover {
+  transform: scale(1.1, 1.1);
+  background-color: rgba(205, 205, 205, 0.621);
+  cursor: pointer;
 }
 .products .products-container .product .description {
   margin: 1rem 0;
   display: none;
 }
 .products .products-container .product .pricerate {
-  font-size: 1rem;
+  font-size: 0.9rem;
   margin-top: auto;
+  margin-bottom: 0.5rem;
   text-align: left;
   width: 100%;
 }
 .products .products-container .product .pricerate .price {
-  color: red;
+  color: green;
 }
 .products .products-container .product .pricerate .rating {
-  color: green;
+  color: rgb(255, 102, 0);
 }
 .products .products-container .product:hover img {
   transform: scale(1.1, 1.1);
+}
+
+/* deskripsi setiap produk */
+.description-box {
+  display: none;
+  width: 55rem;
+  height: 27rem;
+  background-image: linear-gradient(to left, rgb(165, 165, 165) 30%, white 70%);
+  position: fixed;
+  top: 20%;
+  left: 17%;
+  z-index: 9999;
+  color: #000;
+  overflow: scroll;
+}
+.description-box.active {
+  display: block; /* menampilkan deskripsi box ketika aktif */
+}
+.description-box h1 {
+  text-align: center;
+  margin: 1rem 0;
+  padding: 1rem 0;
+}
+.description-box button {
+  position: absolute;
+  font-size: 2rem;
+  background-color: transparent;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+  padding: 0 0.5rem;
+}
+.description-box button:hover {
+  background-color: rgba(240, 233, 233, 0.637);
+  border-radius: 0.7rem;
+  padding: 0 0.5rem;
+}
+.description-box .description-div {
+  font-size: 1rem;
+  font-weight: normal;
+  display: flex;
+  gap: 1rem;
+}
+.description-box .description-div img {
+  width: 10rem;
+  height: auto;
+  margin-left: 1.5rem;
+  flex: 1;
+}
+.description-box .description-div p {
+  font-size: 1.1rem;
+  padding: 1rem 2rem;
+  line-height: 2rem;
+  flex-wrap: wrap;
+  width: 5rem;
+  height: auto;
+  flex: 2;
+  justify-content: center;
 }
 
 /* ulasan customer */
@@ -429,6 +529,7 @@ header .icons-header .cart-icon:hover {
 .footer {
   margin-top: 3rem;
   background-color: #f1f0e8;
+  position: relative;
 }
 .footer .box-container {
   color: #fff;
@@ -514,11 +615,67 @@ header .icons-header .cart-icon:hover {
   .box-footer p {
     padding: 0.5rem;
   }
+  .description-box {
+    width: 37rem;
+    height: 25rem;
+    top: 20%;
+    left: 30%;
+  }
+  .description-box h1 {
+    text-align: center;
+    margin: 0.7rem 0.3rem;
+    padding: 0.4rem;
+  }
+  .description-box button {
+    font-size: 1.1rem;
+    top: 0.7rem;
+    right: 0.8rem;
+    padding: 0 0.7rem;
+  }
+  .description-box .description-div img {
+    width: 3rem;
+    height: auto;
+  }
+  .description-box .description-div p {
+    font-size: 0.8rem;
+    padding: 0.4rem;
+    line-height: 1.1rem;
+    width: 4rem;
+    height: auto;
+  }
 }
 
 /* Mobile Phones */
 @media (max-width: 450px) {
   html {
     font-size: 50%;
+  }
+  .description-box {
+    width: 20rem;
+    height: 17rem;
+    top: 20%;
+    left: 15%;
+  }
+  .description-box h1 {
+    text-align: center;
+    margin: 0.5rem 0.1rem;
+    padding: 0.3rem;
+  }
+  .description-box button {
+    font-size: 1rem;
+    top: 0.5rem;
+    right: 0.7rem;
+    padding: 0 0.5rem;
+  }
+  .description-box .description-div img {
+    width: 2rem;
+    height: auto;
+  }
+  .description-box .description-div p {
+    font-size: 0.7rem;
+    padding: 0.3rem;
+    line-height: 1rem;
+    width: 3rem;
+    height: auto;
   }
 }
