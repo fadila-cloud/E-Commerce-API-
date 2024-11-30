@@ -47,22 +47,10 @@
 
     <!-- Shopping-cart Mulai -->
     <div class="shopping-cart">
-      <div class="cart-item">
-        <img src="${product.image}" alt="${product.title}" />
-        <div class="detail">
-          <h4></h4>
-          <span></span>
-          <button>&minus;</button>
-          <span></span>
-          <button>&plus;</button> &equals;
-          <!-- html entities simbol untk sama dengan -->
-          <span></span>
-          <button class="remove">Hapus</button>
-        </div>
-      </div>
+      <div class="cart-container"></div>
       <!-- bila keranjang masih kosong maka tampilkan ini -->
       <h5 style="font-size: 1.5rem">Keranjang anda masih kosong</h5>
-      <h6>Total : <span></span></h6>
+      <h6>Total : <span id="total-price">0.00</span></h6>
 
       <div class="form-container">
         <form action="" id="checkout">
@@ -133,8 +121,8 @@
               <option value="2035">2035</option>
             </select>
           </label>
-          <button class="btn-checkout" type="submit" @click.prevent="$store.cart.checkout(item)">Checkout</button>
-          <button class="btn-reset" type="reset" @click.prevent="$store.cart.hapussemua(item)">Reset</button>
+          <button class="btn-checkout" type="submit" onclick="cart.checkout()">Checkout</button>
+          <button class="btn-reset" type="reset" onclick="cart.hapussemua()">Reset</button>
         </form>
       </div>
     </div>
@@ -155,15 +143,20 @@
     </section>
     <!-- Menu Products Berakhir -->
 
+    <!-- Background Deskripsi Mulai -->
+    <section class="bg-desc"></section>
+    <!-- Background Deskripsi Akhir -->
+
     <!-- Product Description Mulai -->
-     <section class="description-box">
+    <section class="description-box">
       <h1>Description About this Product</h1>
       <button onclick="closeDesc()">&times;</button>
       <div class="description-div">
-        <img src="" alt=""> <!-- kosongkan dulu src nya -->
+        <img src="" alt="" />
+        <!-- kosongkan dulu src nya -->
         <p></p>
       </div>
-     </section>
+    </section>
     <!-- Product Description Berakhir -->
 
     <!-- Review Mulai -->

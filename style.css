@@ -94,14 +94,17 @@ header .icons-header .cart-icon:hover {
 .home .btn-home {
   display: inline-block;
   border-radius: 1rem;
-  background-color: #9b9b9b;
-  color: #fff;
+  background-color: rgb(196, 188, 188);
+  color: #333;
   padding: 0.7rem 0.5rem;
   font-size: 1rem;
   margin-top: 1rem;
+  border: 0.1rem solid #333;
 }
 .home .btn-home:hover {
   background-color: rgb(128, 128, 128);
+  color: #fff;
+  border: none;
 }
 
 /* keranjang belanja */
@@ -128,7 +131,7 @@ header .icons-header .cart-icon:hover {
   margin-top: 0.7rem;
   display: none;
 }
-.shopping-cart .cart-item {
+.shopping-cart .cart-container {
   display: flex;
   gap: 0.7rem;
   width: 100%;
@@ -137,6 +140,49 @@ header .icons-header .cart-icon:hover {
   align-items: center;
   padding: 0 0 0 0.3rem;
   background-color: #efefef;
+}
+.shopping-cart .cart-container img {
+  border: 0.1rem solid #555;
+  border-radius: 100%;
+  height: 4rem;
+  margin: 0;
+}
+.shopping-cart .cart-container .detail {
+  flex: 1;
+  font-size: 1rem;
+  text-align: left;
+  padding: 0.5rem 0;
+}
+.shopping-cart .cart-container .detail span {
+  font-size: 0.8rem;
+}
+.shopping-cart .cart-container .detail #add,
+.detail #less {
+  display: inline-block;
+  padding: 0.1rem 0.2rem;
+  margin: 0.1rem;
+  cursor: pointer;
+  background-color: #fff;
+  color: #333;
+  font-weight: bold;
+  font-size: 0.7rem;
+  border: 0.1rem solid #333;
+}
+.shopping-cart .cart-container .detail #add:hover,
+.detail #less:hover {
+  background-color: #333;
+  color: #fff;
+}
+.shopping-cart .cart-container .detail .remove {
+  color: #fff;
+  font-size: 0.7rem;
+  border: 0.1rem solid rgb(255, 71, 71);
+  background-color: rgb(255, 71, 71);
+  padding: 0.1rem;
+}
+.shopping-cart .cart-container .detail .remove:hover {
+  background-color: red;
+  border: 0.1rem solid red;
 }
 
 /* Checkout Form */
@@ -387,6 +433,22 @@ header .icons-header .cart-icon:hover {
   height: auto;
   flex: 2;
   justify-content: center;
+}
+
+/* bg deskripsi */
+.bg-desc {
+  display: none;
+  z-index: 9998;
+  width: 100%;
+  height: 100vh; /* tinggi penuh sesuai viewport */
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  background-color: rgba(36, 34, 34, 0.507);
+}
+ .bg-desc.active {
+  display: block; 
 }
 
 /* ulasan customer */
@@ -650,6 +712,40 @@ header .icons-header .cart-icon:hover {
   html {
     font-size: 50%;
   }
+  .home .content-home {
+    top: 15rem;
+    margin-left: 1rem;
+    text-align: left;
+  }
+  .home .content-home h3 {
+    font-size: 2rem;
+    font-family: inherit;
+  }
+  .home .content-home h3 span {
+    font-size: 2rem;
+    margin-left: 0.5rem;
+  }
+  .home .content-home p {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    padding: 0.3rem 0.7rem;
+    font-family: inherit;
+  }
+  .home .content-home p:first-of-type {  /* memeilih p pertama dari content-home */
+    margin-top: 2rem;
+  }
+  .home .btn-home {
+    border-radius: 1rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+    margin-top: 1rem;
+  }
+  .about p {
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1.7rem;
+    padding: 1.3rem 3rem;
+  }
   .description-box {
     width: 20rem;
     height: 17rem;
@@ -664,7 +760,7 @@ header .icons-header .cart-icon:hover {
   .description-box button {
     font-size: 1rem;
     top: 0.5rem;
-    right: 0.7rem;
+    right: 0.5rem;
     padding: 0 0.5rem;
   }
   .description-box .description-div img {
