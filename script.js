@@ -3,22 +3,35 @@ document.addEventListener("alpine:init", () => {
   // alpine untukproduk
   Alpine.data("products", () => ({
     items: [], // menyimpan data produk
+    cache: null, // cache yg disimpan di memori
     async fetchAndDisplayProduct() {
       console.log("Memulai fetch data produk...");
+
+      // mengecek apakah data sudah ada di cache
+      if (this.cache) {
+        console.log("Menggunakan data dari cache");
+        this.items = this.cache; // menggunakan data dari cache
+        return;
+      }
+
       try {
         // Mengambil data dari API
-        const response = await fetch('https://fakestoreapi.com/products');
-        if (!response.ok) throw new Error('Gagal mengambil data');
-    
+        const response = await fetch("https://fakestoreapi.com/products");
+        if (!response.ok) throw new Error("Gagal mengambil data");
+
         // Parsing data JSON
         const data = await response.json();
-    
+
+        // menyimpan data yg diambil dari cache
+        this.cache = data;
+        console.log("Data berhasil diambil dan disimpan di cache:", data);
+
         // Menampilkan data ke items
         this.items = data;
         // menampilkan data ke konsol
-        console.log('Produk berhasil diambil: ', data);
+        console.log("Produk berhasil diambil: ", data);
       } catch (error) {
-        console.error('Terjadi kesalahan:', error);
+        console.error("Terjadi kesalahan:", error);
       }
     },
 
@@ -28,7 +41,7 @@ document.addEventListener("alpine:init", () => {
       this.fetchAndDisplayProduct();
     },
   }));
-    
+
   //alpine untuk keranjang
   Alpine.store("cart", {
     items: [], // untuk menyimpan barang

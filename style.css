@@ -147,7 +147,7 @@ header .icons-header .cart-icon:hover {
 }
 .shopping-cart .cart-container .detail {
   flex: 1;
-  font-size: 1rem;
+  font-size: 0.9rem;
   text-align: left;
   padding: 0.5rem 0 1rem;
   justify-content: baseline;
@@ -752,6 +752,8 @@ header .icons-header .cart-icon:hover {
   }
   .shopping-cart {
     top: 10rem;
+    width: 100%;
+    height: 100vh; 
   }
   .description-box {
     width: 20rem;
