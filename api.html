@@ -28,6 +28,9 @@
         <a href="#products">Produk</a>
         <a href="#review">Ulasan</a>
         <a href="#contact">Kontak</a>
+        <!-- void(0) spy tdk menuju url manapun -->
+        <a href="javascript:void(0)" @click="showCategory()">Kategori</a>
+        <!-- supaya link tdk mengarah ke url lain -->
       </nav>
       <div class="icons-header">
         <!-- tombol keranjang -->
@@ -36,6 +39,44 @@
       </div>
     </header>
     <!-- Navbar Berakhir -->
+
+    <!-- Section Category Mulai -->
+    <section class="category" x-data="filterCategory()" x-init="init()">
+      <div class="category-isi">
+        <!-- category filter -->
+        <div class="category-1">
+          <h1>Category Filter</h1>
+          <ul>
+            <li @click="filterProducts('men\'s clothing')">Men's clothing</li>
+            <li @click="filterProducts('jewelery')">Jewelery</li>
+            <li @click="filterProducts('electronics')">Electronics</li>
+            <li @click="filterProducts(women\'s clothing)">Women's clothing</li>
+            <li @click="filterProducts('all')">Show All</li>
+          </ul>
+        </div>
+        <!-- category filter produk -->
+        <div class="category-2">
+          <button onclik="closeCategory()">&times;</button>
+          <h1>Products Category Filter</h1>
+          <div class="category-container">
+            <template x-for="(item, index) in filterProduk" :key="index">
+              <div class="product">
+                <img :src="item.image" :alt="item.title" />
+                <h3 id="title" onclick="klikProduk(this)" x-text="item.title"></h3>
+                <h5 onclick="clickMe(this)">Detail...</h5>
+                <p class="description" x-text="item.description"></p>
+                <div class="pricerate">
+                  <p class="price" x-text="`Price: $${item.price}`"></p>
+                  <p class="rating" x-text="`Rating: $${item.rating.rate} (${item.rating.count} reviews)`"></p>
+                </div>
+                <!-- <button class="troli-cart" onclick="myCart(this)" @click="$store.cart.add(item)">Tambahkan ke Keranjang</button> -->
+              </div>
+            </template>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Section Category Berakhir -->
 
     <!-- Home Section Mulai -->
     <section class="home" id="home">
