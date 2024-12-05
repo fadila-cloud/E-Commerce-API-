@@ -173,12 +173,10 @@ function filterCategory() {
 document.addEventListener("DOMContentLoaded", () => {
   // DOMContentLoaded berfungsi menunggu semua hlmn termuat sebelum menjalankan kode ini
   feather.replace(); // Inisialisasi Feather Icons
-
-  // ambil elemen shopping-cart dan cart-icon
   const shoppingCart = document.querySelector(".shopping-cart");
   const cartIcon = document.querySelector(".cart-icon");
 
-  // ketika tombol keranjang di klik
+  // toggle
   if (cartIcon && shoppingCart) {
     cartIcon.onclick = () => {
       shoppingCart.classList.toggle("active");
@@ -187,6 +185,60 @@ document.addEventListener("DOMContentLoaded", () => {
     console.error("Elemen shopping-cart atau cart-icon tidak ditemukan");
   }
 });
+
+// ketika tombol kategori di klik
+document.addEventListener("DOMContentLoaded", () => {
+  const categorySection = document.querySelector(".category");
+  const categoryLink = document.querySelector(".kategori");
+  const closeBtn = document.querySelector(".close-btn");
+  const semuaIsiBody = Array.from(document.body.children); // Ambil semua elemen anak dari body
+
+  // if (categorySection && categoryLink) {
+  //   categoryLink.onclick = () => {
+  //     categorySection.classList.toggle("tampilkan");
+  //   };
+  // } else {
+  //   console.log("Category tidak ditemukan");
+  // }
+  // // untuk menutup kategori
+  // closeBtn.addEventListener("click", () => {
+  //   categorySection.style.display = "none";
+  // });
+
+  if (categorySection && categoryLink) {
+    categoryLink.onclick = () => {
+      const isTampilkan = categorySection.classList.toggle("tampilkan");
+
+      // Tampilkan hanya elemen kategori, sembunyikan elemen lainnya
+      semuaIsiBody.forEach((child) => {
+        if (!child.classList.contains("category")) {
+          child.style.display = isTampilkan ? "none" : ""; // Sembunyikan jika kategori aktif
+        }
+      });
+
+      // Pastikan elemen kategori tetap terlihat
+      categorySection.style.display = isTampilkan ? "block" : "none";
+    };
+  } else {
+    console.log("Category atau tombol kategori tidak ditemukan");
+  }
+
+  if (closeBtn) {
+    closeBtn.onclick = () => {
+      // Tampilkan kembali semua elemen di dalam body
+      semuaIsiBody.forEach((child) => {
+        child.style.display = ""; // Reset tampilan elemen
+      });
+
+      // Sembunyikan kategori
+      categorySection.style.display = "none";
+      categorySection.classList.remove("tampilkan"); // Hilangkan kelas "tampilkan"
+    };
+  } else {
+    console.log("Tombol close tidak ditemukan");
+  }
+});
+
 
 // payment method ketika kartu kredit di klik
 document.addEventListener("DOMContentLoaded", function () {
@@ -229,12 +281,6 @@ function clickMe(h5) {
   // menampilkan description box
   descriptionBox.style.display = "block";
   bgDesc.style.display = "block";
-}
-
-// menutup filter category
-function closeCategory() {
-  const filterProduct = document.querySelector(".category");
-  filterProduct.style.display = "none";
 }
 
 // menutup description box

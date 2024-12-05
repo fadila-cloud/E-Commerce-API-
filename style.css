@@ -67,27 +67,30 @@ header .icons-header .cart-icon:hover {
   max-width: 100%;
   height: 100vh;
   background-color: #e5e1da;
+  display: none;
 }
-.category .category-isi {
+.category.tampilkan {
+  display: block;
+}
+.category .category-box {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  margin-top: 7rem;
 }
-.category .category-isi .category-1 {
+.category .category-box .sidebar {
   flex: 1;
   background-color: #c9c6c0;
   padding: 1rem;
   height: 100vh;
   border-radius: 0.3rem;
 }
-.category .category-isi .category-1 h1,
-.category-2 h1 {
+.category .category-box .sidebar h1,
+.content h1 {
   padding: 0.3rem;
-  margin-bottom: 1rem;
+  margin: 1rem 0 2rem;
   text-align: center;
 }
-.category .category-isi .category-1 ul li {
+.category .category-box .sidebar ul li {
   list-style-type: none;
   padding: 0.5rem 0.7rem;
   background-color: #f1ecec;
@@ -97,57 +100,64 @@ header .icons-header .cart-icon:hover {
   font-weight: bold;
   border-radius: 0.5rem;
 }
-.category .category-isi .category-1 ul li:hover {
+.category .category-box .sidebar ul li:hover {
   color: #fcf9f9;
   background-color: #92908a;
   cursor: pointer;
 }
-.category .category-isi .category-2 {
+.category .category-box .content {
   flex: 4;
   background-color: #c9c6c0;
   border-radius: 0.3rem;
+  overflow: auto;
+  height: 100vh;
+  padding: 1rem 0.3rem;
 }
-.category .category-isi .category-2 button {
+.category .category-box .content button {
   position: absolute;
   font-size: 2rem;
   background-color: transparent;
-  top: 7rem;
-  right: 1rem;
+  top: 1rem;
+  right: 2rem;
   cursor: pointer;
   padding: 0 0.5rem;
 }
-.category .category-isi .category-2 button:hover {
+.category .category-box .content button:hover {
   color: #fff;
   background-color: #92908a;
   border-radius: 0.1rem;
   padding: 0 0.5rem;
 }
-.category .category-isi .category-2 .category-container {
+.category .category-box .content .isi-content {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.1rem;
+  gap: 0.5rem;
   width: 100%;
   justify-content: center;
-  overflow: auto;
+  align-items: center;
 }
-.category .category-isi .category-2 .category-container .product {
+.category .category-box .content .isi-content .product {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 0.1rem solid #ccc;
+  border: 0.1rem solid #b7b6b6;
   padding: 0.3rem;
   margin: 0.1rem;
+  width: 11rem;
+  height: auto;
   background-color: #fff;
+  position: relative;
 }
-.category .category-isi .category-2 .category-container .product img {
-  max-width: 5rem;
-  height: 5rem;
+.category .category-box .content .isi-content .product img {
+  max-width: 7rem;
+  height: 7rem;
+  margin-top: 0.3rem;
 }
-.category .category-isi .category-2 .category-container .product:hover img {
+.category .category-box .content .isi-content .product:hover img {
   transform: scale(1.1, 1.1);
 }
-.category .category-isi .category-2 .category-container .product h3 {
+.category .category-box .content .isi-content .product h3 {
   white-space: nowrap;
   width: 10rem;
   overflow: hidden; /* menyembunyikan teks yg panjang */
@@ -156,15 +166,15 @@ header .icons-header .cart-icon:hover {
   font-size: 1.1rem;
   margin: 1rem 0 0.3rem;
 }
-.category .category-isi .category-2 .category-container .product h3:hover {
+.category .category-box .content .isi-content .product h3:hover {
   cursor: pointer;
 }
-.category .category-isi .category-2 .category-container .product h3.fulltitle {
+.category .category-box .content .isi-content .product h3.fulltitle {
   white-space: normal;
   overflow: visible;
   text-overflow: unset; /* kembali ke defaultnya */
 }
-.category .category-isi .category-2 .category-container .product h5 {
+.category .category-box .content .isi-content .product h5 {
   font-size: 1rem;
   font-weight: normal;
   padding: 0.3rem 0.2rem;
@@ -172,26 +182,38 @@ header .icons-header .cart-icon:hover {
   border-radius: 0.1rem;
   color: red;
 }
-.category .category-isi .category-2 .category-container .product h5:hover {
+.category .category-box .content .isi-content .product h5:hover {
   transform: scale(1.1, 1.1);
   background-color: rgba(205, 205, 205, 0.621);
   cursor: pointer;
 }
-.category .category-isi .category-2 .category-container .product .description {
+.category .category-box .content .isi-content .product .description {
   margin: 1rem 0;
   display: none;
 }
-.category .category-isi .category-2 .category-container .product .pricerate {
+.category .category-box .content .isi-content .product .pricerate {
   font-size: 0.9rem;
-  margin-top: auto;
-  margin-bottom: 0.5rem;
+  margin-bottom: auto;
   text-align: left;
-  width: 100%;
+  /* width: 100%;
+  bottom: 0; */
+  position: relative;
 }
-.category .category-isi .category-2 .category-container .product .pricerate .price {
+.category .category-box .content .isi-content .product .pricerate button {
+  background-color: transparent;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  font-size: 0.9rem;
+  width: 100%;
+  bottom: 0;
+  position: absolute;
+}
+.category .category-box .content .isi-content .product .pricerate .price {
   color: green;
 }
-.category .category-isi .category-2 .category-container .product .pricerate .rating {
+.category .category-box .content .isi-content .product .pricerate .rating {
   color: rgb(255, 102, 0);
 }
 
