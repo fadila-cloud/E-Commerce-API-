@@ -32,6 +32,11 @@
         <a href="javascript:void(0)" class="kategori">Kategori</a>
         <!-- supaya link tdk mengarah ke url lain -->
       </nav>
+      <div class="search">
+        <!-- onkeyup ktk user ketik sesuatu maka fungsi search akan dipanggil saat itu juga -->
+        <input type="text" id="find" onkeyup="search()" placeholder="Cari di sini..." />
+        <i data-feather="search" class="search-icon"></i>
+      </div>
       <div class="icons-header">
         <!-- tombol keranjang -->
         <i data-feather="shopping-cart" class="cart-icon"></i>
@@ -50,16 +55,16 @@
             <li @click="filterProducts('men\'s clothing')">Men's clothing</li>
             <li @click="filterProducts('jewelery')">Jewelery</li>
             <li @click="filterProducts('electronics')">Electronics</li>
-            <li @click="filterProducts(women\'s clothing)">Women's clothing</li>
+            <li @click="filterProducts('women\'s clothing')">Women's clothing</li>
             <li @click="filterProducts('all')">Show All</li>
           </ul>
         </div>
         <!-- category filter produk -->
         <div class="content">
-          <button class="close-btn">&times;</button>
           <h1>Products Category Filter</h1>
+          <button class="close-btn">&times;</button>
           <div class="isi-content">
-            <template x-for="(item, index) in filterProduk" :key="index">
+            <template x-for="(item, index) in filterResults" :key="index">
               <div class="product">
                 <img :src="item.image" :alt="item.title" />
                 <h3 id="title" onclick="klikProduk(this)" x-text="item.title"></h3>
@@ -68,9 +73,8 @@
                 <div class="pricerate">
                   <p class="price" x-text="`Price: $${item.price}`"></p>
                   <p class="rating" x-text="`Rating: $${item.rating.rate} (${item.rating.count} reviews)`"></p>
-                  <button>Tambahkan ke Keranjang</button>
+                  <button onclick="myCart(this)" @click="$store.cart.add(item)">Tambahkan ke Keranjang</button>
                 </div>
-                <!-- <button class="addtocart" onclick="myCart(this)" @click="$store.cart.add(item)">Tambahkan ke Keranjang</button> -->
               </div>
             </template>
           </div>

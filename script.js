@@ -127,7 +127,77 @@ document.addEventListener("alpine:init", () => {
   });
 });
 
-// bagian Category
+// ketika keranjang belanja di klik
+document.addEventListener("DOMContentLoaded", () => {
+  // DOMContentLoaded berfungsi menunggu semua hlmn termuat sebelum menjalankan kode ini
+  feather.replace(); // Inisialisasi Feather Icons
+  const shoppingCart = document.querySelector(".shopping-cart");
+  const cartIcon = document.querySelector(".cart-icon");
+
+  // toggle
+  if (cartIcon && shoppingCart) {
+    cartIcon.onclick = () => {
+      shoppingCart.classList.toggle("active");
+    };
+  } else {
+    console.error("Elemen shopping-cart atau cart-icon tidak ditemukan");
+  }
+});
+
+// ketika tombol kategori di klik
+document.addEventListener("DOMContentLoaded", () => {
+  const categorySection = document.querySelector(".category");
+  const categoryLink = document.querySelector(".kategori");
+  const closeBtn = document.querySelector(".close-btn");
+  const semuaIsiBody = Array.from(document.body.children); // Ambil semua elemen anak dari body
+
+  if (categorySection && categoryLink) {
+    categoryLink.onclick = () => {
+      const tampilkan = categorySection.classList.toggle("tampilkan");
+      // Tampilkan hanya elemen kategori, sembunyikan elemen lainnya
+      semuaIsiBody.forEach((child) => {
+        if (!child.classList.contains("category")) {
+          child.style.display = tampilkan ? "none" : ""; // Sembunyikan jika kategori aktif
+        }
+      });
+      // Pastikan elemen kategori tetap terlihat
+      categorySection.style.display = tampilkan ? "block" : "none";
+    };
+  } else {
+    console.log("Category atau tombol kategori tidak ditemukan");
+  }
+
+  if (closeBtn) {
+    closeBtn.onclick = () => {
+      // Tampilkan kembali semua elemen di dalam body
+      semuaIsiBody.forEach((child) => {
+        child.style.display = ""; // tampilan default
+      });
+      categorySection.style.display = "none"; // sembunyikan kategori
+      categorySection.classList.remove("tampilkan"); // Hilangkan kelas "tampilkan"
+    };
+  } else {
+    console.log("Tombol close tidak ditemukan");
+  }
+});
+
+// payment method ketika kartu kredit di klik
+document.addEventListener("DOMContentLoaded", function () {
+  const pilihPembayaran = document.querySelector("#payment");
+  const expiredLabel = document.querySelectorAll(".expired-label");
+
+  pilihPembayaran.addEventListener("change", function () {
+    if (this.value === "Kartu Kredit") {
+      // tampilkan elemen tanggal dan tahun kadaluarsa
+      expiredLabel.forEach((label) => (label.style.display = "block"));
+    } else {
+      // sembunyikan elemen tanggal dan tahun kdaluarsa
+      expiredLabel.forEach((label) => (label.style.display = "none"));
+    }
+  });
+});
+
+// filter categori
 function filterCategory() {
   return {
     // data produk
@@ -153,115 +223,48 @@ function filterCategory() {
       { category: "women's clothing", description: "100% Polyester, Machine wash, 100% cationic polyester interlock, Machine Wash & Pre Shrunk for a Great Fit, Lightweight, roomy and highly breathable with moisture wicking fabric which helps to keep moisture away, Soft Lightweight Fabric with comfortable V-neck collar and a slimmer fit, delivers a sleek, more feminine silhouette and Added Comfort", id: 19, image: "https://fakestoreapi.com/img/51eg55uWmdL._AC_UX679_.jpg", price: 7.95, rating: { rate: 4.5, count: 146 }, title: "Opna Women's Short Sleeve Moisture" },
       { category: "women's clothing", description: "95%Cotton,5%Spandex, Features: Casual, Short Sleeve, Letter Print,V-Neck,Fashion Tees, The fabric is soft and has some stretch., Occasion: Casual/Office/Beach/School/Home/Street. Season: Spring,Summer,Autumn,Winter.", id: 20, image: "https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_.jpg", price: 12.99, rating: { rate: 3.6, count: 145 }, title: "DANVOUY Womens T Shirt Casual Cotton Short" },
     ],
-    filterProduk: [],
-
+    filterResults: [],
+    // panggil
     init() {
-      this.filterProduk = this.items;
+      this.filterResults = this.items;
+      this.filterProducts("men's clothing");
+      console.log(this.filterResults);
     },
-
     filterProducts(category) {
       if (category === "all") {
-        this.filterProduk = this.items;
+        this.filterResults = this.items;
       } else {
-        this.filterProduk = this.items.filter((item) => item.category === category);
+        this.filterResults = this.items.filter((item) => item.category === category);
       }
     },
   };
 }
 
-// ketika keranjang belanja di klik
-document.addEventListener("DOMContentLoaded", () => {
-  // DOMContentLoaded berfungsi menunggu semua hlmn termuat sebelum menjalankan kode ini
-  feather.replace(); // Inisialisasi Feather Icons
-  const shoppingCart = document.querySelector(".shopping-cart");
-  const cartIcon = document.querySelector(".cart-icon");
+// fitur pencarian berdasarkan nama produk
+function search() {
+  const filter = document.getElementById("find").value.toUpperCase(); // gunakan uppercase supaya tdk sensitif
+  const item = document.querySelectorAll(".product");
+  const judul = document.getElementsByTagName("h3");
 
-  // toggle
-  if (cartIcon && shoppingCart) {
-    cartIcon.onclick = () => {
-      shoppingCart.classList.toggle("active");
-    };
-  } else {
-    console.error("Elemen shopping-cart atau cart-icon tidak ditemukan");
-  }
-});
+  for (var i = 0; i < judul.length; i++) {
+    let a = item[i].getElementsByTagName("h3");
+    let value = a.innerHTML || a.innerText || a.textContent;
 
-// ketika tombol kategori di klik
-document.addEventListener("DOMContentLoaded", () => {
-  const categorySection = document.querySelector(".category");
-  const categoryLink = document.querySelector(".kategori");
-  const closeBtn = document.querySelector(".close-btn");
-  const semuaIsiBody = Array.from(document.body.children); // Ambil semua elemen anak dari body
-
-  // if (categorySection && categoryLink) {
-  //   categoryLink.onclick = () => {
-  //     categorySection.classList.toggle("tampilkan");
-  //   };
-  // } else {
-  //   console.log("Category tidak ditemukan");
-  // }
-  // // untuk menutup kategori
-  // closeBtn.addEventListener("click", () => {
-  //   categorySection.style.display = "none";
-  // });
-
-  if (categorySection && categoryLink) {
-    categoryLink.onclick = () => {
-      const isTampilkan = categorySection.classList.toggle("tampilkan");
-
-      // Tampilkan hanya elemen kategori, sembunyikan elemen lainnya
-      semuaIsiBody.forEach((child) => {
-        if (!child.classList.contains("category")) {
-          child.style.display = isTampilkan ? "none" : ""; // Sembunyikan jika kategori aktif
-        }
-      });
-
-      // Pastikan elemen kategori tetap terlihat
-      categorySection.style.display = isTampilkan ? "block" : "none";
-    };
-  } else {
-    console.log("Category atau tombol kategori tidak ditemukan");
-  }
-
-  if (closeBtn) {
-    closeBtn.onclick = () => {
-      // Tampilkan kembali semua elemen di dalam body
-      semuaIsiBody.forEach((child) => {
-        child.style.display = ""; // Reset tampilan elemen
-      });
-
-      // Sembunyikan kategori
-      categorySection.style.display = "none";
-      categorySection.classList.remove("tampilkan"); // Hilangkan kelas "tampilkan"
-    };
-  } else {
-    console.log("Tombol close tidak ditemukan");
-  }
-});
-
-
-// payment method ketika kartu kredit di klik
-document.addEventListener("DOMContentLoaded", function () {
-  const pilihPembayaran = document.querySelector("#payment");
-  const expiredLabel = document.querySelectorAll(".expired-label");
-
-  pilihPembayaran.addEventListener("change", function () {
-    if (this.value === "Kartu Kredit") {
-      // tampilkan elemen tanggal dan tahun kadaluarsa
-      expiredLabel.forEach((label) => (label.style.display = "block"));
+    // > -1 bisa ditemukan di mana saja, diawal, tengah, atau akhir
+    if (value.toUpperCase().indexOf(filter) > -1) {
+      item[i].style.display = ""; // menampilkan semua elemen produk sesuai nama yg dipanggil
     } else {
-      // sembunyikan elemen tanggal dan tahun kdaluarsa
-      expiredLabel.forEach((label) => (label.style.display = "none"));
+      item[i].style.display = "none"; // menyembunyikan produk jika teks tdk cocok
     }
-  });
-});
+  }
+}
 
 // menampilkan title lengkapnya
 function klikProduk(h3) {
   h3.classList.toggle("fulltitle");
 }
 
-// menampilkan box description disertai gambar dan deskripsi dari kelas product di javascript
+// menampilkan box description disertai gambar dan deskripsi
 function clickMe(h5) {
   // ambil elemen description box dan bg description
   const descriptionBox = document.querySelector(".description-box");
@@ -295,12 +298,6 @@ function closeDesc() {
 
 // tambahkan ke keranjang
 function myCart(button) {
-  if (button.dataset.clicked === "true") {
-    return; // keluar dari fungsi jika sudah diklik sebelumnya
-  }
-  // menampilkan alert hanya untuk kik yg pertama
   alert("Pesanan berhasil ditambahkan");
   button.innerHTML = "Ditambahkan ke keranjang";
-  // menandai button sbg sudah di klik
-  button.dataset.clicked = "true";
 }
