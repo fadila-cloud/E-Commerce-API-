@@ -210,8 +210,8 @@
         <template x-for="(item, index) in items" :key="index">
           <div class="product">
             <img :src="item.image" :alt="item.title" />
-            <h3 id="title" onclick="klikProduk(this)" x-text="item.title"></h3>
-            <h5 onclick="clickMe(this)">Detail...</h5>
+            <h3 id="title" onclick="showFullTitle(this)" x-text="item.title"></h3>
+            <h5 onclick="showDetail(this)">Detail...</h5>
             <p class="description" x-text="item.description"></p>
             <div class="pricerate">
               <p class="price" x-text="`Price: $${item.price}`"></p>
@@ -233,9 +233,8 @@
       <h1>Description About this Product</h1>
       <button onclick="closeDesc()">&times;</button>
       <div class="description-div">
-        <img src="" alt="" />
-        <!-- kosongkan dulu src nya -->
-        <p></p>
+        <img src="" alt="" /> <!-- kosongkan dulu src nya -->
+        <p class="deskripsiproduk"></p>
       </div>
     </section>
     <!-- Product Description Berakhir -->

@@ -7,11 +7,21 @@ document.addEventListener("alpine:init", () => {
     async fetchAndDisplayProduct() {
       console.log("Memulai fetch data produk...");
 
-      // mengecek apakah data sudah ada di cache
-      if (this.cache) {
-        console.log("Menggunakan data dari cache");
-        this.items = this.cache; // menggunakan data dari cache
-        return;
+      // mengecek apakah ada data di localStorage
+      const storeProducts = localStorage.getItem("products");
+      if (storeProducts) {
+        try {
+          const parsedProducts = JSON.parse(storeProducts);
+          if (Array.isArray(parsedProducts)) {
+            console.log("Menggunakan data dari localStorage");
+            this.items = parsedProducts; // mengambil data dari localStorage
+            this.cache = this.items; // menyimpan ke cache
+            return;
+          }
+        } catch (error) {
+          console.log("Data di localStorage rusak, mengambil ulang dari API");
+          localStorage.removeItem("products"); // menghapus data yang rusak
+        }
       }
 
       try {
@@ -21,17 +31,31 @@ document.addEventListener("alpine:init", () => {
 
         // Parsing data JSON
         const data = await response.json();
+        console.log(data);
 
-        // menyimpan data yg diambil dari cache
-        this.cache = data;
-        console.log("Data berhasil diambil dan disimpan di cache:", data);
+        // menyimpan data yg diperlukan ke localStorage
+        const filterData = data.map((item) => ({
+          id: item.id,
+          image: item.image,
+          title: item.title,
+          price: item.price,
+          description: item.description,
+          rating: {
+            rate: item.rating.rate,
+            count: item.rating.count,
+          },
+        }));
 
-        // Menampilkan data ke items
-        this.items = data;
-        // menampilkan data ke konsol
-        console.log("Produk berhasil diambil: ", data);
+        // menyimmpan data ke penyimpanan local, gunakan JSON.stringify()
+        // menyimpan ke localStorage dan ubah ke string dgn JSON.stringify()
+        localStorage.setItem("products", JSON.stringify(filterData));
+        console.log("Data berhasil diambil dan disimpan di localStorage", filterData);
+
+        // menampilkan data ke items
+        this.items = filterData;
+        this.cache = filterData;
       } catch (error) {
-        console.error("Terjadi kesalahan:", error);
+        console.log("Terjadi kesalahan", error);
       }
     },
 
@@ -243,47 +267,49 @@ function filterCategory() {
 // fitur pencarian berdasarkan nama produk
 function search() {
   const filter = document.getElementById("find").value.toUpperCase(); // gunakan uppercase supaya tdk sensitif
-  const item = document.querySelectorAll(".product");
-  const judul = document.getElementsByTagName("h3");
+  const products = document.querySelectorAll(".product");
+  const title = document.querySelectorAll(".product h3");
 
-  for (var i = 0; i < judul.length; i++) {
-    let a = item[i].getElementsByTagName("h3");
-    let value = a.innerHTML || a.innerText || a.textContent;
+  for (let i = 0; i < title.length; i++) {
+    let titleText = title[i].innerHTML || title[i].innerText || title[i].textContent;
 
-    // > -1 bisa ditemukan di mana saja, diawal, tengah, atau akhir
-    if (value.toUpperCase().indexOf(filter) > -1) {
-      item[i].style.display = ""; // menampilkan semua elemen produk sesuai nama yg dipanggil
+    // dgn menggunnakan lebih besar -1 maka pencarian nama produk bisa ditemukan di awal, tengah atau akhir
+    if (titleText.toUpperCase().indexOf(filter) > -1) {
+      products[i].style.display = ""; // menampilkan produk jika cocok
     } else {
-      item[i].style.display = "none"; // menyembunyikan produk jika teks tdk cocok
+      products[i].style.display = "none"; // menyembunyikan produk jika tdk sesuai
     }
   }
 }
 
 // menampilkan title lengkapnya
-function klikProduk(h3) {
+function showFullTitle(h3) {
   h3.classList.toggle("fulltitle");
 }
 
 // menampilkan box description disertai gambar dan deskripsi
-function clickMe(h5) {
+function showDetail(h5) {
   // ambil elemen description box dan bg description
   const descriptionBox = document.querySelector(".description-box");
   const bgDesc = document.querySelector(".bg-desc");
-  const img = descriptionBox.querySelector("img");
-  const descText = descriptionBox.querySelector("p");
+  const desImg = descriptionBox.querySelector("img");
+  const descText = descriptionBox.querySelector(".deskripsiproduk");
 
-  // emnemukan elemen produk terkait
+  // menemukan elemen produk terkait
   const productElement = h5.closest(".product");
+  if (!productElement) {
+    console.error("Produk tidak ditemukan.");
+    return;
+  }
   const productImage = productElement.querySelector("img").src; // mengambil gambar dari url kelas product
   const productDescription = productElement.querySelector(".description").textContent; // mengambil text di dlmnya deskripsi kelas product
 
   // perbarui konten dalam descirption box
-  img.src = productImage;
+  desImg.src = productImage;
   descText.textContent = productDescription;
-
   // menampilkan description box
-  descriptionBox.style.display = "block";
-  bgDesc.style.display = "block";
+  descriptionBox.classList.add("active");
+  bgDesc.classList.add("active");
 }
 
 // menutup description box
@@ -291,9 +317,8 @@ function closeDesc() {
   // ambil elemen description box dan bg description
   const descriptionBox = document.querySelector(".description-box");
   const bgDesc = document.querySelector(".bg-desc");
-  // menyembunyikan elemn box
-  descriptionBox.style.display = "none";
-  bgDesc.style.display = "none";
+  descriptionBox.classList.remove("active");
+  bgDesc.classList.remove("active");
 }
 
 // tambahkan ke keranjang
