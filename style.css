@@ -57,6 +57,33 @@ header .search .search-icon {
   width: 1.5rem;
   height: 1.5rem;
 }
+header .refresh {
+  display: inline-block;
+  align-items: center;
+}
+header .refresh #refresh-data {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  padding: 0.5rem 0.3rem;
+  font-size: 0.7rem;
+  color: #fff;
+  background-color: #6d7176;
+  border: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+}
+header .refresh #refresh-data:hover {
+  background-color: #4a5255;
+  transform: scale(1.05);
+}
+header .refresh .refresh-icon {
+  margin-right: 0.3rem;
+  color: #fff;
+  width: 1rem;
+  height: 1rem;
+} 
 header .icons-header {
   position: relative;
 }
@@ -799,9 +826,12 @@ header .icons-header .cart-icon:hover {
   html {
     font-size: 55%;
   }
-
   header {
     padding: 2rem;
+  }
+  header .icons-header span {
+    top: 1.3rem;
+    left: 2.3rem;
   }
 }
 
@@ -819,9 +849,29 @@ header .icons-header .cart-icon:hover {
     border-top: 0.1rem solid rgba(0, 0, 0, 0.1);
     padding: 1rem;
   }
+  header .search {
+    margin-left: 1rem;
+    width: 100%;
+  }
+  header .search input {
+    font-size: 0.7rem;
+  }
+  header .refresh {
+    margin-left: 2rem;
+    width: 100%;
+  }
+  header .refresh .refresh-icon {
+    width: 0.8rem;
+    height: 0.8rem;
+    margin-right: 0.5rem;
+  }
+  header .icons-header .cart-icon {
+    width: 2.3rem;
+    height: 2.3rem;
+  }
   header .icons-header span {
-    top: 1.5rem;
-    left: 2.5rem;
+    top: 1.3rem;
+    left: 2.3rem;
   }
   .category .category-box {
     flex-direction: column;
@@ -892,23 +942,36 @@ header .icons-header .cart-icon:hover {
   html {
     font-size: 50%;
   }
-  header .icons-header span {
-    top: 1.3rem;
-    left: 2.1rem;
-  }
   header .navbar-header {
     padding: 1rem 0;
   }
+  header .search {
+    margin-left: 1rem;
+    width: 30%;
+  }
   header .search input {
-    width: 10rem;
-    padding: 0.3rem 0.1rem;
-    font-size: 1rem;
+    font-size: 0.7rem;
   }
   header .search .search-icon {
-    top: 0.1rem;
-    right: 0.3rem;
-    width: 1.3rem;
-    height: 1.3rem;
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+  header .refresh {
+    margin-left: 0.7rem;
+    width: 100%;
+  }
+  header .refresh .refresh-icon {
+    width: 0.7rem;
+    height: 0.7rem;
+    margin-right: 0.1rem;
+  }
+  header .icons-header .cart-icon {
+    width: 2rem;
+    height: 2rem;
+  }
+  header .icons-header span {
+    top: 1rem;
+    left: 2rem;
   }
   .category .category-box .sidebar ul li {
     font-size: 1.1rem;

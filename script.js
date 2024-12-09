@@ -4,18 +4,24 @@ document.addEventListener("alpine:init", () => {
   Alpine.data("products", () => ({
     items: [], // menyimpan data produk
     cache: null, // cache yg disimpan di memori
-    async fetchAndDisplayProduct() {
-      console.log("Memulai fetch data produk...");
 
-      // mengecek apakah ada data di localStorage
+    async fetchAndDisplayProduct() {
+      console.log("Memulai proses pengambilan data produk...");
+      // mengecek apakah data sudah ada di cache
+      if (this.cache) {
+        console.log("Menggunakan data dari cache:", this.cache);
+        this.items = this.cache;
+        return;
+      }
+      // mengecek apakah data ada di localStorage
       const storeProducts = localStorage.getItem("products");
       if (storeProducts) {
         try {
           const parsedProducts = JSON.parse(storeProducts);
           if (Array.isArray(parsedProducts)) {
-            console.log("Menggunakan data dari localStorage");
+            console.log("Data produk berhasil diambil dari localStorage");
             this.items = parsedProducts; // mengambil data dari localStorage
-            this.cache = this.items; // menyimpan ke cache
+            this.cache = parsedProducts; // menyimpan ke cache
             return;
           }
         } catch (error) {
@@ -24,16 +30,16 @@ document.addEventListener("alpine:init", () => {
         }
       }
 
+      // jika data tidak ditemuka di cache atau localStorage, ambil dari API
       try {
         // Mengambil data dari API
         const response = await fetch("https://fakestoreapi.com/products");
         if (!response.ok) throw new Error("Gagal mengambil data");
-
-        // Parsing data JSON
         const data = await response.json();
-        console.log(data);
-
-        // menyimpan data yg diperlukan ke localStorage
+        // menyimpan data ke cache
+        this.cache = data;
+        console.log("Data berhasil disimpan di cache:", this.cache);
+        // menyimpan data ke localStorage
         const filterData = data.map((item) => ({
           id: item.id,
           image: item.image,
@@ -41,28 +47,37 @@ document.addEventListener("alpine:init", () => {
           price: item.price,
           description: item.description,
           rating: {
-            rate: item.rating.rate,
-            count: item.rating.count,
+            rate: item.rating?.rate || 0,
+            count: item.rating?.count || 0,
           },
         }));
 
-        // menyimmpan data ke penyimpanan local, gunakan JSON.stringify()
-        // menyimpan ke localStorage dan ubah ke string dgn JSON.stringify()
+        // menyimpan data ke localStorage
         localStorage.setItem("products", JSON.stringify(filterData));
-        console.log("Data berhasil diambil dan disimpan di localStorage", filterData);
-
-        // menampilkan data ke items
+        console.log("Data produk berhasil disimpan di localStorage", filterData);
+        // menampilkan data
         this.items = filterData;
-        this.cache = filterData;
       } catch (error) {
-        console.log("Terjadi kesalahan", error);
+        console.log("Terjadi kesalahan saat mengambil data produk", error);
+      }
+    },
+
+    // ketika tombol segarkan data di klik maka hapus semua data produk di localStorage
+    refreshData() {
+      if (confirm("Apakah anda yakin ingin menghapus semua data produk dari localStorage?")) {
+        alert("Menghapus semua data produk dari localStorage");
+        console.log("Menghapus semua data produk dari localStorage...");
+        localStorage.removeItem("products"); // mengahapus semua data produk dari localStorage
+        this.items = []; // hasil output akan menjadi array kosong
+        console.log("Data produk telah dihapus dari localStorage");
       }
     },
 
     // panggil
     init() {
-      console.log("Inisialisasi Alpine...");
+      console.log("Inisialisasi produk...");
       this.fetchAndDisplayProduct();
+      feather.replace(); // untuk menggantikan semua icon feather
     },
   }));
 
@@ -252,7 +267,7 @@ function filterCategory() {
     init() {
       this.filterResults = this.items;
       this.filterProducts("men's clothing");
-      console.log(this.filterResults);
+      // console.log(this.filterResults);
     },
     filterProducts(category) {
       if (category === "all") {

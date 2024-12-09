@@ -4,17 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Multi Store - API -</title>
-
     <!-- Feather Icons -->
-    <script src="https://unpkg.com/feather-icons"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-
     <!-- Tautan Css -->
     <link rel="stylesheet" href="style.css" />
-
     <!-- Tautan javasript -->
     <script src="script.js" async></script>
-
     <!-- Alpine javascript -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   </head>
@@ -30,12 +25,16 @@
         <a href="#contact">Kontak</a>
         <!-- void(0) spy tdk menuju url manapun -->
         <a href="javascript:void(0)" class="kategori">Kategori</a>
-        <!-- supaya link tdk mengarah ke url lain -->
       </nav>
       <div class="search">
         <!-- onkeyup ktk user ketik sesuatu maka fungsi search akan dipanggil saat itu juga -->
         <input type="text" id="find" onkeyup="search()" placeholder="Cari di sini..." />
         <i data-feather="search" class="search-icon"></i>
+      </div>
+      <div class="refresh" x-data="products">
+        <!-- tombol segarkan data -->
+        <!-- ganti onclick dgn milik alpine yaitu @click -->
+        <button id="refresh-data" @click="refreshData"><i data-feather="refresh-cw" class="refresh-icon"></i>Segarkan Data</button>
       </div>
       <div class="icons-header">
         <!-- tombol keranjang -->
@@ -233,7 +232,8 @@
       <h1>Description About this Product</h1>
       <button onclick="closeDesc()">&times;</button>
       <div class="description-div">
-        <img src="" alt="" /> <!-- kosongkan dulu src nya -->
+        <img src="" alt="" />
+        <!-- kosongkan dulu src nya -->
         <p class="deskripsiproduk"></p>
       </div>
     </section>
