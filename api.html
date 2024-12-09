@@ -216,7 +216,7 @@
               <p class="price" x-text="`Price: $${item.price}`"></p>
               <p class="rating" x-text="`Rating: $${item.rating.rate} (${item.rating.count} reviews)`"></p>
             </div>
-            <button class="troli-cart" onclick="myCart(this)" @click="$store.cart.add(item)">Tambahkan ke Keranjang</button>
+            <button class="troli-cart" @click="$store.cart.add(item)">Tambahkan ke Keranjang</button>
           </div>
         </template>
       </div>

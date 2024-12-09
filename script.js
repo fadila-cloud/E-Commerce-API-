@@ -13,10 +13,15 @@ document.addEventListener("alpine:init", () => {
         this.items = this.cache;
         return;
       }
-      // mengecek apakah data ada di localStorage
+
+      // setting variable
       const storeProducts = localStorage.getItem("products");
+      const cartProducts = localStorage.getItem("cart");
+
+      // mengecek apakah data ada di localStorage
       if (storeProducts) {
         try {
+          // mengubah string JSON ke objek javascript
           const parsedProducts = JSON.parse(storeProducts);
           if (Array.isArray(parsedProducts)) {
             console.log("Data produk berhasil diambil dari localStorage");
@@ -47,7 +52,7 @@ document.addEventListener("alpine:init", () => {
           price: item.price,
           description: item.description,
           rating: {
-            rate: item.rating?.rate || 0,
+            rate: item.rating?.rate || 0, // tnda . stlh ? dgnakan untuk mengakses properti tertentu
             count: item.rating?.count || 0,
           },
         }));
@@ -83,11 +88,25 @@ document.addEventListener("alpine:init", () => {
 
   //alpine untuk keranjang
   Alpine.store("cart", {
-    items: [], // untuk menyimpan barang
+    // mengambil data keranjang dari localStorage
+    items: JSON.parse(localStorage.getItem("cart")),
     total: 0,
     quantity: 0,
+    // jalankan init
+    init() {
+      const keranjang = this.items;
+      if (keranjang) {
+        keranjang.forEach((item) => {
+          this.quantity += item.quantity;
+          this.total += item.total; // menambah total barang
+        });
+      }
+    },
+    updateCart() {
+      // menyimpan data produk keranjang ke localStorage
+      localStorage.setItem("cart", JSON.stringify(this.items));
+    },
     add(newItem) {
-      // menambah jumlah item
       // mengecek jika ada barang yg sama di cart
       const cartItem = this.items.find((item) => item.id === newItem.id);
 
@@ -112,6 +131,7 @@ document.addEventListener("alpine:init", () => {
           }
         });
       }
+      this.updateCart(); // update localStorage cart setlah menambah produk
     },
     // form validation
     less(id) {
@@ -132,6 +152,7 @@ document.addEventListener("alpine:init", () => {
             return item;
           }
         });
+        this.updateCart();
       } else {
         // jika quantity kurang dari 1 atau 0, tampilkan peringatan
         alert("Jumlah produk tidak boleh kurang dari 1!");
@@ -142,6 +163,7 @@ document.addEventListener("alpine:init", () => {
       this.items = []; // mengosongkan item
       this.total = 0; // mereset total belanja
       this.quantity = 0; // mereset jumlah item
+      this.updateCart();
     },
     checkout() {
       const inputs = document.querySelectorAll("#checkout input, #checkout select"); // mengambi semua input dan select yg ada di kelas checkout
@@ -159,9 +181,10 @@ document.addEventListener("alpine:init", () => {
     remove(itemtoRemove) {
       // mengahapus setiap item, saya beri nama itemtoRemove
       this.items = this.items.filter((item) => item.id !== itemtoRemove.id); // metode filter hanya untuk elemen tertentu
-      // memperbarui total dan jumlah barang setelah penghapusan\
+      // memperbarui total dan jumlah barang setelah penghapusan
       this.total -= itemtoRemove.price * itemtoRemove.quantity;
       this.quantity -= itemtoRemove.quantity;
+      this.updateCart();
     },
   });
 });
@@ -334,10 +357,4 @@ function closeDesc() {
   const bgDesc = document.querySelector(".bg-desc");
   descriptionBox.classList.remove("active");
   bgDesc.classList.remove("active");
-}
-
-// tambahkan ke keranjang
-function myCart(button) {
-  alert("Pesanan berhasil ditambahkan");
-  button.innerHTML = "Ditambahkan ke keranjang";
 }

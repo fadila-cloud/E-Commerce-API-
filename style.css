@@ -87,9 +87,9 @@ header .refresh .refresh-icon {
 header .icons-header {
   position: relative;
 }
-header .icons-header span {
+header .icons-header #jumlah-cart {
   color: #fff;
-  padding: 0 0.2rem;
+  padding: 0 0.1rem;
   border: 0.1rem solid red;
   border-radius: 100%;
   background-color: red;
@@ -869,7 +869,7 @@ header .icons-header .cart-icon:hover {
     width: 2.3rem;
     height: 2.3rem;
   }
-  header .icons-header span {
+  header .icons-header #jumlah-cart {
     top: 1.3rem;
     left: 2.3rem;
   }
@@ -969,7 +969,7 @@ header .icons-header .cart-icon:hover {
     width: 2rem;
     height: 2rem;
   }
-  header .icons-header span {
+  header .icons-header #jumlah-cart {
     top: 1rem;
     left: 2rem;
   }
@@ -1015,9 +1015,10 @@ header .icons-header .cart-icon:hover {
     padding: 1.3rem 3rem;
   }
   .shopping-cart {
-    top: 10rem;
+    top: 9rem;
     width: 100%;
     height: 100vh;
+    overflow: scroll;
   }
   .description-box {
     width: 20rem;
