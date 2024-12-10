@@ -187,8 +187,8 @@
               <option value="2035">2035</option>
             </select>
           </label>
-          <button class="btn-checkout" type="submit" @click.prevent="$store.cart.checkout()">Checkout</button>
-          <button class="btn-reset" type="reset" @click.prevent="$store.cart.hapussemua()">Reset</button>
+          <button class="btn-checkout" type="submit" @click.prevent="Alpine.store('cart').checkout()">Checkout</button>
+          <button class="btn-reset" type="reset" @click.prevent="Alpine.store('cart').hapussemua()">Reset</button>
         </form>
       </div>
     </div>

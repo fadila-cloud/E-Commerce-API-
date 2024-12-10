@@ -166,9 +166,40 @@ document.addEventListener("alpine:init", () => {
       this.updateCart();
     },
     checkout() {
-      const inputs = document.querySelectorAll("#checkout input, #checkout select"); // mengambi semua input dan select yg ada di kelas checkout
+      const inputs = document.querySelectorAll("#checkout input, #checkout select");
+      const emailInput = document.querySelector("#checkout input[name='email']");
+      // const phoneInput = document.querySelector("#checkout input [name='phone']");
+      // const creditPayment = document.querySelector("#checkout #payment");
+
+      // regular expression regex untuk validasi
+
+      // ^ memastikan pencocokan dimulai dari awal teks
+      // @ harus ada simbol ini di email
+      // \. harus ada titik setalah domain pertama
+      // $ memastikan pencocokan berakhir stlh domain terakhir dimasukkan
+      // + menandakan harus ada satu atau lebih
+
+      // [\s@] berarti harus tidak ada spasi dan simbol @ di domain pertama
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      // const phoneRegex = ;
+
       // mengubah input menjadi array
-      let formKomplit = Array.from(inputs).every((input) => input.value.trim() !== ""); // mengambi setiap inputan dengan every
+      let formKomplit = Array.from(inputs).every((input) => input.value.trim() !== "");
+
+      // cek semua input menggunakan .test() metode regex
+      // validasi email dengan regex
+      if (!emailRegex.test(emailInput.value)) {
+        alert("Error! Email tidak valid. Harap masukkan email dengan benar.");
+        return;
+      }
+
+      // // validasi dengan nomor telepon
+      // if (!phoneRegex.test(phoneInput.value)) {
+      //   alert("Erorr! Nomor telepon tidak valid. Harap masukkan nomor telepon dengan benar.");
+      //   return;
+      // }
+
+      // jika smeua field valid
       if (formKomplit) {
         alert(`Anda harus membayar: $${this.total}`);
         alert("Checkout berhasil! Terimakasih sudah berbelanja di toko kami!");
