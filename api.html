@@ -143,7 +143,7 @@
           </label>
           <label for="payment">
             <span>Metode Pembayaran:</span>
-            <select name="payment" id="payment" required>
+            <select name="payment-method" id="payment-method" required>
               <option value="COD">COD</option>
               <option value="Transfer Bank">Transfer Bank</option>
               <option value="Kartu Kredit">Kartu Kredit</option>
@@ -151,6 +151,12 @@
             </select>
           </label>
 
+          <!-- input untuk nomor kartu kredit -->
+          <!-- <label for="credit-card" class="tooltip2" x-show="$store.cart.checkout === 'Kartu Kredit" style="display: none">
+            <span>Nomor Kartu Kredit</span>
+            <span class="tooltip2">Masukkan nomor kartu kredit anda</span>
+            <input type="text" name="credit-card" id="credit-card" placeholder="Nomor Kartu Kredit" />
+          </label> -->
           <!-- tanggal dan bulan kadaluarsa -->
           <label for="expired" class="expired-label" style="display: none">
             <span>Tanggal Kadaluarsa:</span>

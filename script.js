@@ -168,46 +168,55 @@ document.addEventListener("alpine:init", () => {
     checkout() {
       const inputs = document.querySelectorAll("#checkout input, #checkout select");
       const emailInput = document.querySelector("#checkout input[name='email']");
-      // const phoneInput = document.querySelector("#checkout input [name='phone']");
-      // const creditPayment = document.querySelector("#checkout #payment");
-
-      // regular expression regex untuk validasi
-
-      // ^ memastikan pencocokan dimulai dari awal teks
-      // @ harus ada simbol ini di email
-      // \. harus ada titik setalah domain pertama
-      // $ memastikan pencocokan berakhir stlh domain terakhir dimasukkan
-      // + menandakan harus ada satu atau lebih
-
-      // [\s@] berarti harus tidak ada spasi dan simbol @ di domain pertama
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      // const phoneRegex = ;
+      const phoneInput = document.querySelector("#checkout input[name='tel']");
+      // const creditCard = document.querySelector("#checkout input[name='credit-card']");
+      // const paymentMethod = document.querySelector("#checkout select['name=payment-method']");
 
       // mengubah input menjadi array
       let formKomplit = Array.from(inputs).every((input) => input.value.trim() !== "");
 
-      // cek semua input menggunakan .test() metode regex
-      // validasi email dengan regex
-      if (!emailRegex.test(emailInput.value)) {
-        alert("Error! Email tidak valid. Harap masukkan email dengan benar.");
+      // regular expression regex untuk validasi
+
+      // ^ dan $ awal dan akhir
+      // \. harus ada titik setalah domain kedua
+      // [\s@] berarti harus tidak ada spasi dan simbol @ pd setiap domain
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      // buat 2 pola regex untuk telepon
+      const phoneRegex1 = /^(\+62|62|0)-8\d{2}-\d{4}-\d{2,4}$/;
+      const phoneRegex2 = /^(\+62|62|0)8\d{7,11}$/; // digit 7-11 dibelakang 8, total minim 10 digit dan max 13 digit
+
+      // (?:4\d{12}(?:\d{3})?) angka 4 untuk kartu visa bisa 13 atau 16 digit, gunakan ?... untuk opsional
+      // 5[1-5]\d{14} angka 5 untuk kartu mastercard 14 digit dibelakang angka 51-55, wajib berjumlah 16 digit
+      // 3[47]\d{13}) angka 3 untuk kartu american express, angka awal 34/37, 13 digit dibelakang, wajib berjumlah 15 digit
+      // const creditCardRegex = /^(?:4\d{12}(?:\d{3})?|5[1-5]\d{14}|3[47]\d{13})$/;
+
+      // jika field belum terisi
+      if (!formKomplit) {
+        alert("Error! Harap isi semua field sebeum checkout.");
         return;
-      }
-
-      // // validasi dengan nomor telepon
-      // if (!phoneRegex.test(phoneInput.value)) {
-      //   alert("Erorr! Nomor telepon tidak valid. Harap masukkan nomor telepon dengan benar.");
-      //   return;
-      // }
-
-      // jika smeua field valid
-      if (formKomplit) {
+      } else {
+        // jika sudah terisi maka tampilkan ini
         alert(`Anda harus membayar: $${this.total}`);
         alert("Checkout berhasil! Terimakasih sudah berbelanja di toko kami!");
         // panggil this.hapussemua() untuk mengosongkan cart stelah checkout
         this.hapussemua();
-      } else {
-        alert("Error! Harap isi semua field sebeum checkout.");
       }
+      // validasi email dengan regex
+      if (!emailRegex.test(emailInput.value)) {
+        alert("Email tidak valid! Harap masukkan email dengan benar.");
+        return;
+      }
+      // validasi nomor telepon dengan regex
+      if (!phoneRegex1.test(phoneInput.value) && !phoneRegex2.test(phoneInput.value)) {
+        alert("Nomor telepon tidak valid! Harap masukkan nomor telepon dengan benar.");
+        return;
+      }
+      // validasi nomor kartu kredit
+      // if (!creditCardRegex.test(creditCard.value)) {
+      //   alert("Nomor kartu kredit tidak valid! Harap masukkan ulang nomor dengan benar.");
+      //   return;
+      // }
     },
     remove(itemtoRemove) {
       // mengahapus setiap item, saya beri nama itemtoRemove
