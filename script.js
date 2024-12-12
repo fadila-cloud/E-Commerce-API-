@@ -166,6 +166,18 @@ document.addEventListener("alpine:init", () => {
       this.updateCart();
     },
     checkout() {
+      // modal pesan sukses/eror setelah checkout
+      const modal = document.getElementById("checkout-modal");
+      const modalMessage = document.getElementById("modal-message");
+      const closeButton = document.querySelector(".modal button");
+      // Fungsi untuk menutup modal
+      function closeModal() {
+        modal.classList.remove("active");
+      }
+      if (closeButton) {
+        closeButton.addEventListener("click", closeModal);
+      }
+
       // REGEX regular expression untuk validasi checkout
 
       // ^ dan $ awal dan akhir
@@ -212,7 +224,8 @@ document.addEventListener("alpine:init", () => {
         }
       }
       alert(`Anda harus membayar: $${this.total}`);
-      alert("Checkout berhasil! Terimakasih sudah berbelanja di toko kami!");
+      modalMessage.textContent = `Checkout berhasil! Terimakasih sudah berbelanja di toko kami!`;
+      modal.classList.add("active"); // Menampilkan modal
       this.hapussemua();
     },
     remove(itemtoRemove) {
@@ -232,6 +245,7 @@ document.addEventListener("DOMContentLoaded", () => {
   feather.replace(); // Inisialisasi Feather Icons
   const shoppingCart = document.querySelector(".shopping-cart");
   const cartIcon = document.querySelector(".cart-icon");
+  const addToCart = document.querySelectorAll(".troli-cart");
   // toggle
   if (cartIcon && shoppingCart) {
     cartIcon.onclick = () => {
@@ -240,6 +254,18 @@ document.addEventListener("DOMContentLoaded", () => {
   } else {
     console.error("Elemen shopping-cart atau cart-icon tidak ditemukan");
   }
+
+  // icon bergerak saat barang di tambahkan ke keranjang
+  addToCart.forEach((button) => {
+    button.addEventListener("click", () => {
+      if (cartIcon) {
+        cartIcon.classList.add("animate");
+        setTimeout(() => {
+          cartIcon.classList.remove("animate");
+        }, 600); // 0.2s x 3 = 600ms
+      }
+    });
+  });
 });
 
 // ketika tombol kategori di klik

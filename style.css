@@ -103,6 +103,16 @@ header .icons-header .cart-icon {
   color: #555;
   margin-left: 0.1rem;
 }
+header .icons-header .cart-icon.animate {
+  animation-name: shake;
+  animation-duration: 0.2s;
+  animation-iteration-count: 3;
+}
+@keyframes shake {
+  20% {transform: rotate(10deg);}
+  75% {transform: rotate(-10deg);}
+  100% {transform: rotate(0deg);}
+}
 header .icons-header .cart-icon:hover {
   color: #333;
   border-bottom: 0.1rem solid #000;
@@ -434,6 +444,43 @@ header .icons-header .cart-icon:hover {
 .shopping-cart .form-container .total .btn-checkout:hover {
   background-color: red;
 }
+
+/* Modal Style */
+.modal {
+  display: none; 
+  position: fixed;
+  z-index: 1000;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 20rem;
+  height: auto;
+}
+.modal.active {
+  display: block;
+}
+.modal-content {
+  background-color: #fff;
+  padding: 1rem;
+  text-align: center;
+  position: relative;
+  border-radius: 0.3rem;
+}
+.modal button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-size: 1.5rem;
+  background-color: #fff;
+  color: #000;
+  border: none;
+  cursor: pointer;
+}
+.modal button:hover {
+  background-color: #f1f1f1;
+  padding: 0.3rem 0.1rem;
+}
+
 
 /* about */
 .about {
