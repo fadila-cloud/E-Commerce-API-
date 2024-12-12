@@ -166,57 +166,54 @@ document.addEventListener("alpine:init", () => {
       this.updateCart();
     },
     checkout() {
-      const inputs = document.querySelectorAll("#checkout input, #checkout select");
-      const emailInput = document.querySelector("#checkout input[name='email']");
-      const phoneInput = document.querySelector("#checkout input[name='tel']");
-      // const creditCard = document.querySelector("#checkout input[name='credit-card']");
-      // const paymentMethod = document.querySelector("#checkout select['name=payment-method']");
-
-      // mengubah input menjadi array
-      let formKomplit = Array.from(inputs).every((input) => input.value.trim() !== "");
-
-      // regular expression regex untuk validasi
+      // REGEX regular expression untuk validasi checkout
 
       // ^ dan $ awal dan akhir
       // \. harus ada titik setalah domain kedua
-      // [\s@] berarti harus tidak ada spasi dan simbol @ pd setiap domain
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-      // buat 2 pola regex untuk telepon
-      const phoneRegex1 = /^(\+62|62|0)-8\d{2}-\d{4}-\d{2,4}$/;
-      const phoneRegex2 = /^(\+62|62|0)8\d{7,11}$/; // digit 7-11 dibelakang 8, total minim 10 digit dan max 13 digit
-
+      // [^\s@] untuk karakter apapun selain spasi @ pd setiap domain
+      // [^\s@]+ harus ada setidaknya 1 karakter dan tidak boleh kososng
+      // \. harus ada titik setelah domain kedua
       // (?:4\d{12}(?:\d{3})?) angka 4 untuk kartu visa bisa 13 atau 16 digit, gunakan ?... untuk opsional
       // 5[1-5]\d{14} angka 5 untuk kartu mastercard 14 digit dibelakang angka 51-55, wajib berjumlah 16 digit
       // 3[47]\d{13}) angka 3 untuk kartu american express, angka awal 34/37, 13 digit dibelakang, wajib berjumlah 15 digit
-      // const creditCardRegex = /^(?:4\d{12}(?:\d{3})?|5[1-5]\d{14}|3[47]\d{13})$/;
 
-      // jika field belum terisi
-      if (!formKomplit) {
+      const inputs = document.querySelectorAll("#checkout input, #checkout select");
+      const emailInput = document.querySelector("#checkout input[name='email']");
+      const phoneInput = document.querySelector("#checkout input[name='tel']");
+      const creditCard = document.querySelector("#checkout input[name='credit-card']");
+      const paymentMethod = document.querySelector("#payment-method");
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const phoneRegex1 = /^(\+62|62|0)-8\d{2}-\d{4}-\d{2,4}$/;
+      const phoneRegex2 = /^08\d{8,11}$/; // total minim 10 digit dan max 13 digit
+      const creditCardRegex = /^(?:4\d{12}(?:\d{3})?|5[1-5]\d{14}|3[47]\d{13})$/;
+      const completeForm = Array.from(inputs).filter((input) => input.value.trim() !== "");
+
+      // validasi ketika semua field kosong
+      if (completeForm.length === 0) {
         alert("Error! Harap isi semua field sebeum checkout.");
         return;
-      } else {
-        // jika sudah terisi maka tampilkan ini
-        alert(`Anda harus membayar: $${this.total}`);
-        alert("Checkout berhasil! Terimakasih sudah berbelanja di toko kami!");
-        // panggil this.hapussemua() untuk mengosongkan cart stelah checkout
-        this.hapussemua();
       }
-      // validasi email dengan regex
+      // validasi email regex
       if (!emailRegex.test(emailInput.value)) {
-        alert("Email tidak valid! Harap masukkan email dengan benar.");
+        alert("Harap masukkan email dengan benar.\nContoh:\nexample@gmail.com\nuser.name@gmail.com\nmy_email@gamil.com\nuser.user@gmail.com");
         return;
       }
-      // validasi nomor telepon dengan regex
+      // validasi phone regex
       if (!phoneRegex1.test(phoneInput.value) && !phoneRegex2.test(phoneInput.value)) {
-        alert("Nomor telepon tidak valid! Harap masukkan nomor telepon dengan benar.");
+        alert("Harap masukkan nomor telepon dengan benar.\nContoh:\n08xxxxxxxx ( 10 atau 13 digit)\n+62-8xx-xxxx-xxxx");
         return;
       }
-      // validasi nomor kartu kredit
-      // if (!creditCardRegex.test(creditCard.value)) {
-      //   alert("Nomor kartu kredit tidak valid! Harap masukkan ulang nomor dengan benar.");
-      //   return;
-      // }
+      // validasi jika method kartu kredit di pilih
+      if (paymentMethod.value === "Kartu Kredit") {
+        if (!creditCardRegex.test(creditCard.value.trim())) {
+          alert("Harap masukkan nomor kertu kredit dengan benar.\nContoh:\nVisa: 4xxxxxxxxxxxx ( 13 atau 16 digit).\nMasterCard: 51xxxxxxxxxxxxxx (16 digit).\nAmerican Express: 34xxxxxxxxxxxxx (15 digit");
+          return;
+        }
+      }
+      alert(`Anda harus membayar: $${this.total}`);
+      alert("Checkout berhasil! Terimakasih sudah berbelanja di toko kami!");
+      this.hapussemua();
     },
     remove(itemtoRemove) {
       // mengahapus setiap item, saya beri nama itemtoRemove
@@ -235,7 +232,6 @@ document.addEventListener("DOMContentLoaded", () => {
   feather.replace(); // Inisialisasi Feather Icons
   const shoppingCart = document.querySelector(".shopping-cart");
   const cartIcon = document.querySelector(".cart-icon");
-
   // toggle
   if (cartIcon && shoppingCart) {
     cartIcon.onclick = () => {
@@ -285,16 +281,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // payment method ketika kartu kredit di klik
 document.addEventListener("DOMContentLoaded", function () {
-  const pilihPembayaran = document.querySelector("#payment");
+  const pilihPembayaran = document.querySelector("#payment-method");
   const expiredLabel = document.querySelectorAll(".expired-label");
+  const nomorKredit = document.querySelector("#nomor-kredit");
 
   pilihPembayaran.addEventListener("change", function () {
     if (this.value === "Kartu Kredit") {
       // tampilkan elemen tanggal dan tahun kadaluarsa
       expiredLabel.forEach((label) => (label.style.display = "block"));
+      nomorKredit.style.display = "block";
     } else {
       // sembunyikan elemen tanggal dan tahun kdaluarsa
       expiredLabel.forEach((label) => (label.style.display = "none"));
+      nomorKredit.style.display = "none";
     }
   });
 });

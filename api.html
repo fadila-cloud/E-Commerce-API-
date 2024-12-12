@@ -121,46 +121,50 @@
       <div class="form-container" x-show="$store.cart.items.length">
         <form action="" id="checkout">
           <h5>Detail Pembeli</h5>
-          <label for="name" class="tooltip2">
-            <span>Nama Lengkap:</span>
-            <span class="tooltiptext2">Tulis nama lengkap anda</span>
+          <label for="name" class="tooltip">
+            <span>Nama Lengkap</span>
+            <span class="tooltiptext">Tulis nama lengkap anda</span>
             <input type="text" name="name" id="name" placeholder=" your name" />
           </label>
-          <label for="email" class="tooltip2">
-            <span>Email:</span>
-            <span class="tooltiptext2">Tulis email anda</span>
+          <label for="email" class="tooltip">
+            <span>Email</span>
+            <span class="tooltiptext">Tulis email anda</span>
             <input type="email" name="email" id="email" placeholder=" your email" />
           </label>
-          <label for="tel" class="tooltip2">
-            <span>No. Telpon:</span>
-            <span class="tooltiptext2">Masukkan nomor telepon</span>
+          <label for="tel" class="tooltip">
+            <span>No. Telpon</span>
+            <span class="tooltiptext">Masukkan nomor telepon</span>
             <input type="tel" name="tel" id="tel" placeholder=" your number" />
           </label>
-          <label for="alamat" class="tooltip2">
-            <span>Alamat:</span>
-            <span class="tooltiptext2">Tulis alamat desa anda</span>
+          <label for="alamat" class="tooltip">
+            <span>Alamat</span>
+            <span class="tooltiptext">Tulis alamat desa anda</span>
             <input type="text" name="alamat" id="alamat" placeholder=" your address" autocomplete="off" />
           </label>
           <label for="payment">
-            <span>Metode Pembayaran:</span>
+            <span>Metode Pembayaran</span>
             <select name="payment-method" id="payment-method" required>
-              <option value="COD">COD</option>
+              <option value="COD">Cash on Delivery (COD)</option>
               <option value="Transfer Bank">Transfer Bank</option>
               <option value="Kartu Kredit">Kartu Kredit</option>
-              <option value="Tunai">Tunai di Mitra/Agen</option>
+              <option value="Tunai">Tunai di Mitra</option>
+              <option value="Virual Account">Virtual Account</option>
+              <option value="E-Wallet">E-Wallet (Dana, OVO, Gopay, dll)</option>
+              <option value="QRIS">QRIS</option>
+              <option value="PayLater">Bayar Nanti (PayLater)</option>
             </select>
           </label>
 
           <!-- input untuk nomor kartu kredit -->
-          <!-- <label for="credit-card" class="tooltip2" x-show="$store.cart.checkout === 'Kartu Kredit" style="display: none">
-            <span>Nomor Kartu Kredit</span>
-            <span class="tooltip2">Masukkan nomor kartu kredit anda</span>
-            <input type="text" name="credit-card" id="credit-card" placeholder="Nomor Kartu Kredit" />
-          </label> -->
+          <label for="credit-card" class="tooltip" id="nomor-kredit" style="display: none">
+            <span>No.Kartu Kredit</span>
+            <span class="tooltiptextno">Masukkan No.Kartu Kredit anda</span>
+            <input type="text" name="credit-card" id="credit-card" placeholder=" your credit card number" />
+          </label>
           <!-- tanggal dan bulan kadaluarsa -->
           <label for="expired" class="expired-label" style="display: none">
-            <span>Tanggal Kadaluarsa:</span>
-            <select name="expired" id="expired" required>
+            <span>Tanggal Kadaluarsa</span>
+            <select name="expired" id="expired-month" required>
               <option value="1-Januari">Tanggal 1 Januari</option>
               <option value="1-Februari">Tanggal 1 Februari</option>
               <option value="1-Maret">Tanggal 1 Maret</option>
@@ -177,8 +181,9 @@
           </label>
           <!-- Tahun kadaluarsa -->
           <label for="expired" class="expired-label" style="display: none">
-            <span>Tahun Kadaluarsa:</span>
-            <select name="expired" id="expired" required>
+            <span>Tahun Kadaluarsa</span>
+            :
+            <select name="expired" id="expired-year" required>
               <option value="2024">2024</option>
               <option value="2025">2025</option>
               <option value="2026">2026</option>
